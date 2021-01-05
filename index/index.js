@@ -5,32 +5,38 @@ if (localStorage.getItem("token") == null) {
 }
 
 // 查接口文档
-$.ajax({
-    url: "http://ajax.frontend.itheima.net/my/userinfo",
-    // 语法设置请求头 ：带上token值
-    headers: {
-        Authorization: localStorage.getItem("token")
-    },
-    success: function (res) {
-        var name = res.data.nickname || res.data.username;
 
-        $(".username").html(name);
+window.getInfo();
 
-        // 有头像地址显示图片 ，显示头像
-        // 如果没有，截取名字第一字符，大写，显示在某个盒子内
-        if (res.data.user_pic) {
-            $(".layui-nav-img").show().attr("src", res.data.user_pic);
-            $(".avatar").hide();
-        } else {
-            var first = name.substr(0, 1);
-            first = first.toUpperCase();
+function getInfo() {
+    $.ajax({
+        url: "/my/userinfo",
+        // 语法设置请求头 ：带上token值
+        // headers: {
+        //     Authorization: localStorage.getItem("token")
+        // },
+        success: function (res) {
+            var name = res.data.nickname || res.data.username;
+
+            $(".username").html(name);
+
+            // 有头像地址显示图片 ，显示头像
+            // 如果没有，截取名字第一字符，大写，显示在某个盒子内
+            if (res.data.user_pic) {
+                $(".layui-nav-img").show().attr("src", res.data.user_pic);
+                $(".avatar").hide();
+            } else {
+                var first = name.substr(0, 1);
+                first = first.toUpperCase();
 
 
-            $(".layui-nav-img").hide();
-            $(".avatar").show().css("display", "inline-block").text(first);
+                $(".layui-nav-img").hide();
+                $(".avatar").show().css("display", "inline-block").text(first);
+            }
         }
-    }
-})
+    })
+}
+
 //--------------------------------退出事件
 var layer = layui.layer;
 $("#logout").on("click", function () {

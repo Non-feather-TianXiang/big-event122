@@ -32,8 +32,8 @@ $("#register form").on("submit", function (e) {
     var params = $(this).serialize();
 
     $.ajax({
-        url: 'http://ajax.frontend.itheima.net/api/reguser',
-        type: "post",
+        url: '/api/reguser',
+        type: "POST",
         data: params,
         success: function (res) {
             // 不管成功失败，都进行弹窗
@@ -57,8 +57,8 @@ $("#login form").on("submit", function (e) {
     var params = $(this).serialize();
 
     $.ajax({
-        url: 'http://ajax.frontend.itheima.net/api/login',
-        type: "post",
+        url: '/api/login',
+        type: "POST",
         data: params,
         success: function (res) {
             layer.msg(res.message);
