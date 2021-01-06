@@ -20,11 +20,12 @@ $.ajaxPrefilter(function (obj) {
         };
 
         obj.complete = function (xhr) {
-            // 后台接口设计：token过期无效，返回都是这些数据！
-            // xhr 就是原生xhr  xhr.responseJSON解析后结果
-            if (xhr.responseJSON.status == 1 || xhr.responseJSON.message == "身份认证失败！") {
+            var obj = JSON.parse(xhr.responseText);
+            // 很多obj.status：1
+
+            if (obj.status == 1 && obj.message == '身份认证失败！') {
                 localStorage.removeItem("token");
-                location.href = "./login.html";
+                location.href = "/login.html";
             }
         }
     }
